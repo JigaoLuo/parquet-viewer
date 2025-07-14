@@ -4,20 +4,23 @@ version = "0.1.21"
 edition = "2024"
 
 [dependencies]
-arrow = { version = "55.0.0", default-features = false }
-arrow-schema = { version = "55.0.0", default-features = false }
-arrow-array = { version = "55.0.0", default-features = false }
-arrow-cast = { version = "55.0.0", default-features = false }
+arrow = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false, features = ["csv"] }
+arrow-schema = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+arrow-array = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+arrow-cast = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
 bytes = "1.10.1"
 console_error_panic_hook = "0.1.7"
 datafusion = { version = "47.0.0", default-features = false, features = [
 	"parquet",
 ] }
 leptos = { version = "0.8", features = ["csr", "nightly"] }
-parquet = { version = "55.0.0", features = [
+parquet = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", features = [
 	"arrow",
 	"snap",
+	"async",
+	"object_store",
 	"flate2",
+	"flate2-zlib-rs",
 	"lz4",
 	"async",
 	"zstd",
