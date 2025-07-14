@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use byte_unit::{Byte, UnitType};
 use bytes::{Buf, Bytes};
+use leptos::logging;
 use leptos::prelude::*;
 use parquet::{
     arrow::async_reader::AsyncFileReader,
@@ -180,9 +181,24 @@ pub fn PageInfo(
             let rg = metadata.row_group(row_group_id);
             let col = rg.column(column_id);
 
-            let page_reader =
-                SerializedPageReader::new(Arc::new(chunk), col, rg.num_rows() as usize, None)
-                    .unwrap();
+            let num_rows = match rg.num_rows().try_into() {
+                Ok(n) => n,
+                Err(e) => {
+                    // Handle the error, e.g., by logging it and returning early.
+                    // This prevents the panic.
+                    eprintln!("Failed to convert row count to usize: {}", e);
+                    return Vec::new();
+                }
+            };
+            leptos::logging::log!("Creating page reader with num_rows: {}", num_rows);
+            let page_reader = match SerializedPageReader::new(Arc::new(chunk), col, num_rows, None)
+            {
+                Ok(reader) => reader,
+                Err(e) => {
+                    logging::log!("JJJJ Failed to create a page reader: {}", e);
+                    return Vec::new();
+                }
+            };
 
             let mut page_info = Vec::new();
             for page in page_reader.flatten() {
