@@ -3,25 +3,41 @@ name = "parquet-explorer"
 version = "0.1.21"
 edition = "2024"
 
-[dependencies]
-arrow = { version = "55.0.0", default-features = false }
-arrow-schema = { version = "55.0.0", default-features = false }
-arrow-array = { version = "55.0.0", default-features = false }
-arrow-cast = { version = "55.0.0", default-features = false }
-bytes = "1.10.1"
-console_error_panic_hook = "0.1.7"
-datafusion = { version = "47.0.0", default-features = false, features = [
-	"parquet",
-] }
-leptos = { version = "0.8", features = ["csr", "nightly"] }
-parquet = { version = "55.0.0", features = [
+[patch.crates-io]
+arrow = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false, features = ["csv"] }
+arrow-schema = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+arrow-array = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+arrow-cast = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+parquet = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", features = [
 	"arrow",
 	"snap",
 	"flate2",
+	"flate2-zlib-rs",
 	"lz4",
 	"async",
 	"zstd",
 ], default-features = false }
+
+[dependencies]
+arrow = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false, features = ["csv"] }
+arrow-schema = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+arrow-array = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+arrow-cast = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", default-features = false }
+parquet = { git = "https://github.com/apache/arrow-rs.git", rev = "d534dd036f9addd8bf80d498663c13cdc3372f8c", features = [
+	"arrow",
+	"snap",
+	"flate2",
+	"flate2-zlib-rs",
+	"lz4",
+	"async",
+	"zstd",
+], default-features = false }
+# DataFusion from crates.io - we'll need to check compatibility
+datafusion = { version = "47.0.0", default-features = false, features = ["parquet"] }
+bytes = "1.10.1"
+console_error_panic_hook = "0.1.7"
+console_log = "1.0.0"
+leptos = { version = "0.8", features = ["csr", "nightly"] }
 serde_json = "1.0.140"
 wasm-bindgen-futures = "0.4.50"
 web-sys = { version = "0.3.77", features = [
@@ -43,7 +59,6 @@ opendal = { version = "0.53.3", default-features = false, features = [
 ] }
 object_store_opendal = { version = "0.52.1", features = ["send_wrapper"] }
 leptos_router = { version = "0.8.2", features = ["nightly"] }
-object_store = "0.12.1"
 async-trait = "0.1.88"
 url = "2.5.4"
 anyhow = "1.0"
