@@ -4,24 +4,25 @@ version = "0.1.21"
 edition = "2024"
 
 [dependencies]
-arrow = { version = "55.0.0", default-features = false }
-arrow-schema = { version = "55.0.0", default-features = false }
-arrow-array = { version = "55.0.0", default-features = false }
-arrow-cast = { version = "55.0.0", default-features = false }
-bytes = "1.10.1"
-console_error_panic_hook = "0.1.7"
-datafusion = { version = "47.0.0", default-features = false, features = [
-	"parquet",
-] }
-leptos = { version = "0.8", features = ["csr", "nightly"] }
-parquet = { version = "55.0.0", features = [
+datafusion = { git = "https://github.com/apache/datafusion.git", branch = "main", default-features = false, features = ["parquet",]}
+arrow = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false, features = ["csv"] }
+arrow-schema = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false }
+arrow-array = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false }
+arrow-cast = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false }
+parquet = { git = "https://github.com/apache/arrow-rs.git", branch = "main", features = [
 	"arrow",
 	"snap",
+	"async",
+	"object_store",
 	"flate2",
+	"flate2-zlib-rs",
 	"lz4",
 	"async",
 	"zstd",
 ], default-features = false }
+bytes = "1.10.1"
+console_error_panic_hook = "0.1.7"
+leptos = { version = "0.8", features = ["csr", "nightly"] }
 serde_json = "1.0.140"
 wasm-bindgen-futures = "0.4.50"
 web-sys = { version = "0.3.77", features = [
@@ -43,7 +44,7 @@ opendal = { version = "0.53.3", default-features = false, features = [
 ] }
 object_store_opendal = { version = "0.52.1", features = ["send_wrapper"] }
 leptos_router = { version = "0.8.2", features = ["nightly"] }
-object_store = "0.12.1"
+object_store = "0.12.2"
 async-trait = "0.1.88"
 url = "2.5.4"
 anyhow = "1.0"
@@ -52,6 +53,24 @@ tokio = { version = "1.45.0", features = ["rt"] }
 gloo-net = "0.6.0"
 getrandom = { version = "0.3", features = ["wasm_js"] }
 byte-unit = "5.1.6"
+
+[patch.crates-io]
+datafusion = { git = "https://github.com/apache/datafusion.git", branch = "main", default-features = false, features = ["parquet",]}
+arrow = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false, features = ["csv"] }
+arrow-schema = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false }
+arrow-array = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false }
+arrow-cast = { git = "https://github.com/apache/arrow-rs.git", branch = "main", default-features = false }
+parquet = { git = "https://github.com/apache/arrow-rs.git", branch = "main", features = [
+	"arrow",
+	"snap",
+	"async",
+	"object_store",
+	"flate2",
+	"flate2-zlib-rs",
+	"lz4",
+	"async",
+	"zstd",
+], default-features = false }
 
 [profile.release]
 strip = true
