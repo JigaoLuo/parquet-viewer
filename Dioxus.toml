@@ -1,7 +1,6 @@
 [application]
 
 [web.app]
-base_path = "parquet-viewer"
 
 # HTML title tag content
 title = "Parquet Viewer - View and Query Parquet Files Online"
